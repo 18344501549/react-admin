@@ -1,0 +1,41 @@
+#login {
+    width: 100%;
+    height: 100%;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+.from-box {
+    border-radius: 6px;
+    background: #fff;
+    width: 400px;
+}
+
+.registration {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: 0 6px;
+}
+
+.login-title {
+    font-size: 16px;
+    line-height: 50px;
+    color: palevioletred;
+}
+
+.registration-title {
+
+    font-size: 12px;
+    opacity: .3;
+}
+
+#normal_login {
+    margin-top: 10px;
+}
+
+.from-item {
+    width: 100%;
+    padding: 0px 6px !important;
+}
