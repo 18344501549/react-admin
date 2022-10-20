@@ -4,11 +4,6 @@ interface loginData {
     code:string
 }
 
-interface codeData {
-    val:string | number
-}
-
 export  type {
-    loginData,
-    codeData
+    loginData
 }

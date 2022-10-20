@@ -3,23 +3,20 @@ import '../../styles/login.scss';
 import { LockOutlined, UserOutlined, MailOutlined } from '@ant-design/icons';
 import { Col, Row } from 'antd';
 import { Button, Form, Input } from 'antd';
-import { loginData, codeData } from './loginType'
+import { loginData } from './loginType';
+import { validate_password } from '../../utils/validate'
 function Login() {
 
-    const [code, setCode] = useState('获取验证码');
+    const [code, setCode] = useState<string | number>('获取验证码');
 
     const getCode = () => {
-        // setCode(60)
-        // changeCode(codeData)
-    }
-
-    const changeCode = (val: codeData) => {
-
+        setCode(60);
     }
 
     const onFinish = (values: loginData) => {
         console.log('Received values of form: ', values);
     };
+
     return (
         <div id='login'>
             <div className='from-box'>
@@ -33,16 +30,16 @@ function Login() {
                     <Form.Item
                         name="username"
                         className='from-item'
-                        rules={[{ required: true, message: '请输入用户名!' }]}
+                        rules={[{ required: true, message: '邮箱不能为空' }, { type: 'email', message: '邮箱格式不正确' }]}
                     >
-                        <Input prefix={<UserOutlined className="site-form-item-icon" />} placeholder="Username" />
+                        <Input prefix={<UserOutlined className="site-form-item-icon" />} placeholder="email" />
                     </Form.Item>
 
 
                     <Form.Item
                         name="password"
                         className='from-item'
-                        rules={[{ required: true, message: '请输入密码!' }]}
+                        rules={[{ required: true, message: '密码不能为空' }, { pattern: validate_password, message: '请输入大于6位小于20位的数字+字母' }]}
                     >
                         <Input
                             type="password"
@@ -54,7 +51,7 @@ function Login() {
                     <Form.Item
                         name="code"
                         className='from-item'
-                        rules={[{ required: true, message: '请输入验证码!' }]}
+                        rules={[{ required: true, message: '验证码不能为空' }]}
                     >
                         <Row gutter={10}>
                             <Col span={15}><Input prefix={<MailOutlined className="code-form-item-icon" />} placeholder="code" /></Col>
