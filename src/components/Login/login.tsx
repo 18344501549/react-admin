@@ -4,7 +4,9 @@ import { LockOutlined, UserOutlined, MailOutlined } from '@ant-design/icons';
 import { Col, Row } from 'antd';
 import { Button, Form, Input } from 'antd';
 import { loginData } from './loginType';
-import { validate_password } from '../../utils/validate'
+import { validate_password } from '../../utils/validate';
+import { LoginApi } from '../../api/loginApi';
+
 function Login() {
 
     const [code, setCode] = useState<string | number>('获取验证码');
@@ -15,6 +17,12 @@ function Login() {
 
     const onFinish = (values: loginData) => {
         console.log('Received values of form: ', values);
+        LoginApi(values).then(res => {
+            console.log(res, 'res');
+
+        }).catch(err => {
+
+        })
     };
 
     return (
@@ -51,7 +59,7 @@ function Login() {
                     <Form.Item
                         name="code"
                         className='from-item'
-                        rules={[{ required: true, message: '验证码不能为空' }]}
+                        rules={[{ required: true, message: '验证码不能为空' }, { len: 6, message: '请输入六位数验证码' }]}
                     >
                         <Row gutter={10}>
                             <Col span={15}><Input prefix={<MailOutlined className="code-form-item-icon" />} placeholder="code" /></Col>

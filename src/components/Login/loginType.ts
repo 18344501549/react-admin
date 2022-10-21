@@ -4,6 +4,6 @@ interface loginData {
     code:string
 }
 
-export  type {
+export type {
     loginData
 }
