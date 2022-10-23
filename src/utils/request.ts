@@ -1,5 +1,5 @@
 import axios, { AxiosRequestConfig } from 'axios';
-import { message } from 'antd';
+import { message, Alert } from 'antd';
 
 // //基础URL，axios将会自动拼接在url前
 // //process.env.NODE_ENV 判断是否为开发环境 根据不同环境使用不同的baseURL 方便调试
@@ -101,8 +101,7 @@ const requestHandler = <T>(method: 'get' | 'post' | 'put' | 'delete', url: strin
             //业务代码 可根据需求自行处理
             const data = res.data;
             // resolve(data.data);
-            console.log(data, 'res');
-            if (data.resCode !== 200) {
+            if (data.resCode !== 0) {
 
                 //特定状态码 处理特定的需求
                 if (data.resCode === 401) {
@@ -120,6 +119,10 @@ const requestHandler = <T>(method: 'get' | 'post' | 'put' | 'delete', url: strin
                 reject(data);
             } else {
                 //数据请求正确 使用resolve将结果返回
+                message.success({
+                    content: data.message,
+                    duration: 1
+                })
                 resolve(data.data);
             }
 

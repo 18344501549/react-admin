@@ -5,15 +5,71 @@ import { Col, Row } from 'antd';
 import { Button, Form, Input } from 'antd';
 import { loginData } from './loginType';
 import { validate_password } from '../../utils/validate';
-import { LoginApi } from '../../api/loginApi';
+import { LoginApi, GetCode } from '../../api/loginApi';
+import { message } from 'antd';
 
 function Login() {
+    const [BtnDisabled, setBtnDisabled] = useState<boolean>(false);
+
+    const [codeData, setCodeData] = useState<string>('');
 
     const [code, setCode] = useState<string | number>('获取验证码');
 
+    const [codeLoding, setCodeLoding] = useState<boolean>(false);
+
+    const getUserName = (e: React.ChangeEvent<HTMLInputElement>) => {
+        setCodeData(e.target.value);
+    };
+
+    /**倒计时 */
+    const countDown = () => {
+        let timer: NodeJS.Timeout | undefined;
+        let time = 60;
+
+        if (timer) {
+            clearInterval(timer);
+        };
+        // 409019683@qq.com
+        timer = setInterval(() => {
+            time--;
+            setCode(`${time}s`);
+            if (time <= 0) {
+                console.log(1);
+                clearInterval(timer);
+                setCode('重新获取验证码');
+                setBtnDisabled(false);
+            }
+        }, 1000);
+
+
+        setCodeLoding(false);
+        setBtnDisabled(true);
+
+    };
+
     const getCode = () => {
-        setCode(60);
-    }
+        if (!codeData) {
+            message.warning('用户名不能为空', 1);
+            return false;
+        };
+
+        setCode('发送中');
+        setCodeLoding(true);
+
+        GetCode({
+            username: codeData,
+            module: 'login'
+        }).then(res => {
+            countDown()
+            console.log(res, 'res');
+        }).catch(err => {
+            console.log(err, 'err');
+            setTimeout(() => {
+                setCode('重新发送');
+                setCodeLoding(false);
+            }, 1500);
+        });
+    };
 
     const onFinish = (values: loginData) => {
         console.log('Received values of form: ', values);
@@ -22,7 +78,7 @@ function Login() {
 
         }).catch(err => {
 
-        })
+        });
     };
 
     return (
@@ -40,7 +96,7 @@ function Login() {
                         className='from-item'
                         rules={[{ required: true, message: '邮箱不能为空' }, { type: 'email', message: '邮箱格式不正确' }]}
                     >
-                        <Input prefix={<UserOutlined className="site-form-item-icon" />} placeholder="email" />
+                        <Input value={codeData} autoComplete="off" onChange={getUserName} prefix={<UserOutlined className="site-form-item-icon" />} placeholder="email" />
                     </Form.Item>
 
 
@@ -51,6 +107,7 @@ function Login() {
                     >
                         <Input
                             type="password"
+                            autoComplete="off"
                             prefix={<LockOutlined className="site-form-item-icon" />}
                             placeholder="Password"
                         />
@@ -64,7 +121,7 @@ function Login() {
                         <Row gutter={10}>
                             <Col span={15}><Input prefix={<MailOutlined className="code-form-item-icon" />} placeholder="code" /></Col>
                             <Col span={9}>
-                                <Button type="primary" onClick={getCode} block danger>{code}</Button>
+                                <Button type="primary" onClick={getCode} block danger disabled={BtnDisabled} loading={codeLoding}>{code}</Button>
                             </Col>
                         </Row>
 
