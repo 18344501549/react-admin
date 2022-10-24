@@ -1,12 +1,10 @@
 import React, { useState } from 'react';
 import '../../styles/login.scss';
 import { LockOutlined, UserOutlined, MailOutlined } from '@ant-design/icons';
-import { Col, Row } from 'antd';
-import { Button, Form, Input } from 'antd';
+import { Col, Row, Button, Form, Input, message } from 'antd';
 import { loginData } from './loginType';
 import { validate_password } from '../../utils/validate';
 import { LoginApi, GetCode } from '../../api/loginApi';
-import { message } from 'antd';
 
 function Login() {
     const [BtnDisabled, setBtnDisabled] = useState<boolean>(false);
@@ -22,14 +20,13 @@ function Login() {
     };
 
     /**倒计时 */
+    // 409019683@qq.com
     const countDown = () => {
         let timer: NodeJS.Timeout | undefined;
         let time = 60;
-
         if (timer) {
             clearInterval(timer);
         };
-        // 409019683@qq.com
         timer = setInterval(() => {
             time--;
             setCode(`${time}s`);
@@ -40,8 +37,6 @@ function Login() {
                 setBtnDisabled(false);
             }
         }, 1000);
-
-
         setCodeLoding(false);
         setBtnDisabled(true);
 
@@ -73,6 +68,7 @@ function Login() {
 
     const onFinish = (values: loginData) => {
         console.log('Received values of form: ', values);
+        console.log(1);
         LoginApi(values).then(res => {
             console.log(res, 'res');
 
@@ -98,8 +94,6 @@ function Login() {
                     >
                         <Input value={codeData} autoComplete="off" onChange={getUserName} prefix={<UserOutlined className="site-form-item-icon" />} placeholder="email" />
                     </Form.Item>
-
-
                     <Form.Item
                         name="password"
                         className='from-item'
@@ -112,7 +106,6 @@ function Login() {
                             placeholder="Password"
                         />
                     </Form.Item>
-
                     <Form.Item
                         name="code"
                         className='from-item'
@@ -124,9 +117,7 @@ function Login() {
                                 <Button type="primary" onClick={getCode} block danger disabled={BtnDisabled} loading={codeLoding}>{code}</Button>
                             </Col>
                         </Row>
-
                     </Form.Item>
-
                     <Form.Item className='from-item'>
                         <Button type="primary" htmlType="submit" className="login-form-button" block>
                             登陆
@@ -134,7 +125,6 @@ function Login() {
                     </Form.Item>
                 </Form>
             </div>
-
         </div>
     );
 }
