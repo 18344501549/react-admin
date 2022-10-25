@@ -39,7 +39,6 @@ function Login() {
         }, 1000);
         setCodeLoding(false);
         setBtnDisabled(true);
-
     };
 
     const getCode = () => {
@@ -69,9 +68,10 @@ function Login() {
     const onFinish = (values: loginData) => {
         console.log('Received values of form: ', values);
         console.log(1);
+        console.log(2);
+
         LoginApi(values).then(res => {
             console.log(res, 'res');
-
         }).catch(err => {
 
         });
