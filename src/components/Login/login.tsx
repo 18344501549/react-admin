@@ -1,75 +1,24 @@
 import React, { useState } from 'react';
 import '../../styles/login.scss';
+import CodeBtn from './codebtn/CodeBtn';
 import { LockOutlined, UserOutlined, MailOutlined } from '@ant-design/icons';
 import { Col, Row, Button, Form, Input, message } from 'antd';
 import { loginData } from './loginType';
 import { validate_password } from '../../utils/validate';
-import { LoginApi, GetCode } from '../../api/loginApi';
+import { LoginApi } from '../../api/loginApi';
 
 function Login() {
-    const [BtnDisabled, setBtnDisabled] = useState<boolean>(false);
 
     const [codeData, setCodeData] = useState<string>('');
-
-    const [code, setCode] = useState<string | number>('获取验证码');
-
-    const [codeLoding, setCodeLoding] = useState<boolean>(false);
 
     const getUserName = (e: React.ChangeEvent<HTMLInputElement>) => {
         setCodeData(e.target.value);
     };
 
-    /**倒计时 */
-    // 409019683@qq.com
-    const countDown = () => {
-        let timer: NodeJS.Timeout | undefined;
-        let time = 60;
-        if (timer) {
-            clearInterval(timer);
-        };
-        timer = setInterval(() => {
-            time--;
-            setCode(`${time}s`);
-            if (time <= 0) {
-                console.log(1);
-                clearInterval(timer);
-                setCode('重新获取验证码');
-                setBtnDisabled(false);
-            }
-        }, 1000);
-        setCodeLoding(false);
-        setBtnDisabled(true);
-    };
-
-    const getCode = () => {
-        if (!codeData) {
-            message.warning('用户名不能为空', 1);
-            return false;
-        };
-
-        setCode('发送中');
-        setCodeLoding(true);
-
-        GetCode({
-            username: codeData,
-            module: 'login'
-        }).then(res => {
-            countDown()
-            console.log(res, 'res');
-        }).catch(err => {
-            console.log(err, 'err');
-            setTimeout(() => {
-                setCode('重新发送');
-                setCodeLoding(false);
-            }, 1500);
-        });
-    };
 
     const onFinish = (values: loginData) => {
         console.log('Received values of form: ', values);
         console.log(1);
-        console.log(2);
-
         LoginApi(values).then(res => {
             console.log(res, 'res');
         }).catch(err => {
@@ -114,7 +63,7 @@ function Login() {
                         <Row gutter={10}>
                             <Col span={15}><Input prefix={<MailOutlined className="code-form-item-icon" />} placeholder="code" /></Col>
                             <Col span={9}>
-                                <Button type="primary" onClick={getCode} block danger disabled={BtnDisabled} loading={codeLoding}>{code}</Button>
+                                <CodeBtn codeData={codeData} />
                             </Col>
                         </Row>
                     </Form.Item>
