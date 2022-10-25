@@ -1,5 +1,5 @@
 import axios, { AxiosRequestConfig } from 'axios';
-import { message, Alert } from 'antd';
+import { message } from 'antd';
 
 // //基础URL，axios将会自动拼接在url前
 // //process.env.NODE_ENV 判断是否为开发环境 根据不同环境使用不同的baseURL 方便调试

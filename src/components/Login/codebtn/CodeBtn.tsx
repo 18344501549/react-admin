@@ -7,7 +7,6 @@ function CodeBtn(props: { codeData: string }) {
     const [code, setCode] = useState<string | number>('获取验证码');
     const [codeLoding, setCodeLoding] = useState<boolean>(false);
     /**倒计时 */
-    // 409019683@qq.com
     const countDown = () => {
         let timer: NodeJS.Timeout | undefined;
         let time = 60;

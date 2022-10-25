@@ -6,6 +6,7 @@ import { Col, Row, Button, Form, Input, message } from 'antd';
 import { loginData } from './loginType';
 import { validate_password } from '../../utils/validate';
 import { LoginApi } from '../../api/loginApi';
+import CryptoJS from "crypto-js";
 
 function Login() {
 
@@ -14,11 +15,11 @@ function Login() {
     const getUserName = (e: React.ChangeEvent<HTMLInputElement>) => {
         setCodeData(e.target.value);
     };
-
+    // 409019683@qq.com
 
     const onFinish = (values: loginData) => {
+        values.password = CryptoJS.MD5(values.password).toString();
         console.log('Received values of form: ', values);
-        console.log(1);
         LoginApi(values).then(res => {
             console.log(res, 'res');
         }).catch(err => {
