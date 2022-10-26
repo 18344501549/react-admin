@@ -1,7 +1,7 @@
 interface loginData {
     username: string,
     password: string,
-    code:string
+    code: string
 }
 
 export type {

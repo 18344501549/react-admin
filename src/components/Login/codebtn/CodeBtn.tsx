@@ -1,8 +1,8 @@
 import React, { useState } from 'react';
 import { Button, message } from 'antd';
 import { GetCode } from '../../../api/loginApi';
-function CodeBtn(props: { codeData: string }) {
-    const { codeData } = props
+function CodeBtn(props: { codeData: string, formType: string }) {
+    const { codeData, formType } = props
     const [BtnDisabled, setBtnDisabled] = useState<boolean>(false);
     const [code, setCode] = useState<string | number>('获取验证码');
     const [codeLoding, setCodeLoding] = useState<boolean>(false);
@@ -37,7 +37,7 @@ function CodeBtn(props: { codeData: string }) {
 
         GetCode({
             username: codeData,
-            module: 'login'
+            module: formType
         }).then(res => {
             countDown()
             console.log(res, 'res');
