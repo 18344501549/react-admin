@@ -59,14 +59,14 @@ service.interceptors.request.use(
         console.log(error)
         Promise.reject(error)
     }
-)
+);
 
 //axios返回格式
 interface axiosTypes<T> {
     data: T;
     status: number;
     statusText: string;
-}
+};
 
 //后台响应数据格式
 //###该接口用于规定后台返回的数据格式，意为必须携带code、msg以及result
@@ -76,7 +76,7 @@ interface responseTypes<T> {
     resCode: number,
     msg: string,
     data: T
-}
+};
 
 //核心处理代码 将返回一个promise 调用then将可获取响应的业务数据
 const requestHandler = <T>(method: 'get' | 'post' | 'put' | 'delete', url: string, params: object = {}, config: AxiosRequestConfig = {}): Promise<T> => {
@@ -94,7 +94,7 @@ const requestHandler = <T>(method: 'get' | 'post' | 'put' | 'delete', url: strin
         case 'delete':
             response = service.delete(url, { params: { ...params }, ...config });
             break;
-    }
+    };
 
     return new Promise<T>((resolve, reject) => {
         response.then(res => {
@@ -107,7 +107,7 @@ const requestHandler = <T>(method: 'get' | 'post' | 'put' | 'delete', url: strin
                 if (data.resCode === 401) {
                     message.warn('您的账号已登出或超时，即将登出...');
                     console.log('登录异常，执行登出...');
-                }
+                };
 
                 let e = JSON.stringify(data);
                 // error
@@ -122,9 +122,9 @@ const requestHandler = <T>(method: 'get' | 'post' | 'put' | 'delete', url: strin
                 message.success({
                     content: data.message,
                     duration: 1
-                })
+                });
                 resolve(data.data);
-            }
+            };
 
         }).catch(error => {
             let e = JSON.stringify(error);

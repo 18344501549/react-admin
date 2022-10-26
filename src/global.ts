@@ -1,6 +1,6 @@
 interface StringValidator {
     sum: number,
-    sub?:string
-}
+    sub?: string
+};
 
-export default StringValidator
+export default StringValidator;

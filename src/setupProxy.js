@@ -7,5 +7,5 @@ module.exports = function (app) {
         pathRewrite: {
             [`^${process.env.REACT_APP_API}`]: ''  // 将请求地址中的'/api'重写为空再请求接口（也就是去掉/api）
         }
-    }))
+    }));
 };
