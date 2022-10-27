@@ -1,7 +1,7 @@
 import React from 'react';
 import { Routes, Route, } from "react-router-dom";
 import Login from './components/Login/login';
-
+import Admin from './components/admin/admin';
 import './App.scss';
 
 function App() {
@@ -10,7 +10,8 @@ function App() {
   return (
     <div className="App">
       <Routes>
-        <Route path="/" element={<Login />} />
+        <Route element={<Login />} path="/" />
+        <Route element={<Admin />} path="/admin" />
       </Routes>
     </div>
   );
