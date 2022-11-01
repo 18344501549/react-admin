@@ -1,6 +1,8 @@
-import { MenuFoldOutlined, MenuUnfoldOutlined, UploadOutlined, UserOutlined, VideoCameraOutlined, } from '@ant-design/icons';
+import { MenuFoldOutlined, MenuUnfoldOutlined, } from '@ant-design/icons';
 import { Layout, Menu } from 'antd';
 import React, { useState } from 'react';
+import items from '../../routers';
+// UploadOutlined, UserOutlined, VideoCameraOutlined,
 import './admin.scss';
 
 const Admin = () => {
@@ -10,28 +12,13 @@ const Admin = () => {
         <div id='admin'>
             <Layout className='ant-layouts'>
                 <Sider trigger={null} collapsible collapsed={collapsed} width="254">
-                    <div className="logo" />
+                    <div className="logo">偶买噶</div>
                     <Menu
                         theme="dark"
                         mode="inline"
-                        defaultSelectedKeys={['1']}
-                        items={[
-                            {
-                                key: '1',
-                                icon: <UserOutlined />,
-                                label: 'nav 1',
-                            },
-                            {
-                                key: '2',
-                                icon: <VideoCameraOutlined />,
-                                label: 'nav 2',
-                            },
-                            {
-                                key: '3',
-                                icon: <UploadOutlined />,
-                                label: 'nav 3',
-                            },
-                        ]}
+                        defaultSelectedKeys={['/console']}
+                        defaultOpenKeys={['/console']}
+                        items={items}
                     />
                 </Sider>
                 <Layout className="site-layout">

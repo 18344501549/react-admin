@@ -1,4 +1,5 @@
 import React, { useState } from 'react';
+import { useNavigate } from "react-router-dom";
 import CodeBtn from '../codebtn/CodeBtn';
 import { LockOutlined, UserOutlined, MailOutlined } from '@ant-design/icons';
 import { Col, Row, Button, Form, Input } from 'antd';
@@ -6,8 +7,13 @@ import { loginData } from '../loginType';
 import { validate_password } from '../../../utils/validate';
 import { LoginApi, Register } from '../../../api/loginApi';
 import CryptoJS from "crypto-js";
+import { setToKen } from '../../../utils/tokenType';
 
 const LoginForm = () => {
+
+    /**初始化路由 */
+    const navigate = useNavigate();
+
     const [formType, setFormType] = useState<string>('login');
 
     const [form] = Form.useForm();
@@ -40,11 +46,13 @@ const LoginForm = () => {
         }
         console.log('Received values of form: ', requestData);
         if (formType === 'login') {
-            LoginApi(values).then(res => {
+            LoginApi<{ token: string }>(values).then(res => {
+                setTimeout(() => { setToKen(res.token); navigate('/admin'); }, 1000)
                 console.log(res, 'res');
             }).catch(err => {
                 console.log(err, 'err');
             });
+
         } else {
             Register(values).then(res => {
                 console.log(res, 'res');

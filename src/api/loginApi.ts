@@ -1,6 +1,6 @@
 import { request } from '../utils/request';
 
-import { loginData } from '../components/Login/loginType'
+import { loginData } from '../components/Login/loginType';
 
 /**
  * 登陆接口
