@@ -1,11 +1,11 @@
 import React from 'react';
 
-const RegisterForm = () => {
+const Dashboard = () => {
     return (
         <div>
-
+            仪表盘
         </div>
     );
 };
 
-export default RegisterForm;
+export default Dashboard;

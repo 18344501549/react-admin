@@ -47,7 +47,7 @@ const LoginForm = () => {
         console.log('Received values of form: ', requestData);
         if (formType === 'login') {
             LoginApi<{ token: string }>(values).then(res => {
-                setTimeout(() => { setToKen(res.token); navigate('/admin'); }, 1000)
+                setTimeout(() => { setToKen(res.token); navigate('/admin'); }, 1000);
                 console.log(res, 'res');
             }).catch(err => {
                 console.log(err, 'err');

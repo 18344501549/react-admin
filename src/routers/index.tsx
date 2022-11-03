@@ -1,59 +1,64 @@
 import type { MenuProps } from 'antd';
+import { NavLink } from 'react-router-dom';
 type MenuItem = Required<MenuProps>['items'][number];
 
+function menuItem(path: string, item: string) {
+    return (<NavLink to={path}>{item}</NavLink>)
+};
+
+// menuItem('/dashboard', '仪表盘')
 const items: MenuItem[] = [
     {
-        key: "/console",
-        label: '控制台',
+        key: "/admin/dashboard",
+        label: menuItem('/admin/dashboard', '仪表盘'),
         icon: '',
-        // element: <Navigate to="/login" />
     },
     {
-        key: "/home",
+        key: "/admin/user",
         label: '用户管理',
         icon: '',
         children: [
             {
-                key: "/home/index",
-                label: '用户列表',
+                key: "/admin/user/list",
+                label: menuItem('/admin/user/list', '用户列表'),
                 icon: '',
             },
             {
-                key: "/home/user/add",
-                label: '添加用户',
+                key: "/admin/user/add",
+                label: menuItem('/admin/user/add', '添加用户'),
                 icon: '',
             }
         ]
     },
     {
-        key: "/home/department",
+        key: "/admin/department",
         label: '部门管理',
         icon: '',
         children: [
             {
-                key: "/home/department/list",
+                key: "/admin/department/list",
                 label: '部门列表',
                 icon: '',
             },
             {
-                key: "/home/department/add",
+                key: "/admin/department/add",
                 label: '添加部门',
                 icon: '',
             },
         ]
     },
     {
-        key: "/home/position",
+        key: "/admin/position",
         label: '职位管理',
         icon: '',
         children: [
             {
-                key: "/home/position/list",
+                key: "/admin/position/list",
                 label: '部门列表',
                 icon: '',
             },
             {
-                key: "/home/position/add",
+                key: "/admin/position/add",
                 label: '添加部门',
                 icon: '',
             },
@@ -103,5 +108,6 @@ const items: MenuItem[] = [
     }
 
 ]
+
 
 export default items;

@@ -1,8 +1,8 @@
 import { MenuFoldOutlined, MenuUnfoldOutlined, } from '@ant-design/icons';
+import { Outlet } from "react-router-dom";
 import { Layout, Menu } from 'antd';
 import React, { useState } from 'react';
-import items from '../../routers';
-// UploadOutlined, UserOutlined, VideoCameraOutlined,
+import items from '../../routers/index';
 import './admin.scss';
 
 const Admin = () => {
@@ -16,8 +16,8 @@ const Admin = () => {
                     <Menu
                         theme="dark"
                         mode="inline"
-                        defaultSelectedKeys={['/console']}
-                        defaultOpenKeys={['/console']}
+                        defaultSelectedKeys={['/admin/dashboard']}
+                        defaultOpenKeys={['/admin/dashboard']}
                         items={items}
                     />
                 </Sider>
@@ -36,7 +36,9 @@ const Admin = () => {
                             minHeight: 280,
                         }}
                     >
-                        Content
+                        {/* 渲染子路由 匹配到子路由时，用子路由的组件替换此处内容*/}
+                        {/* 类似Vue中的router-view */}
+                        <Outlet />
                     </Content>
                 </Layout>
             </Layout>
