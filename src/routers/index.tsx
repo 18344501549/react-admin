@@ -37,12 +37,12 @@ const items: MenuItem[] = [
         children: [
             {
                 key: "/admin/department/list",
-                label: '部门列表',
+                label: menuItem('/admin/department/list', '部门列表'),
                 icon: '',
             },
             {
                 key: "/admin/department/add",
-                label: '添加部门',
+                label: menuItem('/admin/department/add', '添加部门'),
                 icon: '',
             },
         ]
@@ -54,12 +54,12 @@ const items: MenuItem[] = [
         children: [
             {
                 key: "/admin/position/list",
-                label: '部门列表',
+                label: menuItem('/admin/position/list', '职位列表'),
                 icon: '',
             },
             {
                 key: "/admin/position/add",
-                label: '添加部门',
+                label: menuItem('/admin/position/add', '添加职位'),
                 icon: '',
             },
         ]
@@ -97,13 +97,13 @@ const items: MenuItem[] = [
     //     ]
     // },
     {
-        key: "/excusedabsence",
-        label: '请假',
+        key: "/admin/excusedabsence",
+        label: menuItem('/admin/excusedabsence', '请假'),
         icon: '',
     },
     {
-        key: "/workovertime",
-        label: '加班',
+        key: "/admin/workovertime",
+        label: menuItem('/admin/workovertime', '加班'),
         icon: '',
     }
 
