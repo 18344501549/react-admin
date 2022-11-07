@@ -1,11 +1,11 @@
 import { MenuFoldOutlined, MenuUnfoldOutlined, } from '@ant-design/icons';
 import { Outlet, useLocation } from "react-router";
+import { Navigate } from "react-router-dom";
 import { Layout, Menu } from 'antd';
 import React, { useEffect, useState } from 'react';
 import items from '../../routers/index';
-import './admin.scss';
 import { getToKen } from '../../utils/tokenType';
-import { redirect } from 'react-router-dom';
+import './admin.scss';
 const Admin = () => {
     const { Header, Sider, Content } = Layout;
     const [collapsed, setCollapsed] = useState(false);
@@ -63,7 +63,7 @@ const Admin = () => {
                     >
                         {/* 渲染子路由 匹配到子路由时，用子路由的组件替换此处内容*/}
                         {/* 类似Vue中的router-view */}
-                        <Outlet />
+                        {getToKen() ? <Outlet /> : <Navigate to={'/login'} />}
                     </Content>
                 </Layout>
             </Layout>

@@ -1,29 +1,29 @@
-// import cookie from 'cookie_js';
-const adminToKen = 'admin_toKen';
-const usernameKey = 'username';
+import cookie from 'react-cookies';
+const adminToKen: string = 'admin_toKen';
+const usernameKey: string = 'username';
 
 
 
 export function getToKen() {
-    return sessionStorage.getItem(adminToKen);
-}
+    return cookie.load(adminToKen);
+};
 
 export function setToKen(toKen: string) {
-    return sessionStorage.setItem(adminToKen, toKen);
-}
+    return cookie.save(adminToKen, toKen, { path: '/' });
+};
 
-export function removeToKen(toKen: string) {
-    return sessionStorage.remove(adminToKen);
-}
+export function removeToKen() {
+    return cookie.remove(adminToKen, { path: '/' });
+};
 
 export function setUserName(value: string) {
-    return sessionStorage.setItem(usernameKey, value);
-}
+    return cookie.save(usernameKey, value, { path: '/' });
+};
 
 export function getUserName() {
-    return sessionStorage.getItem(usernameKey);
-}
+    return cookie.load(usernameKey);
+};
 
 export function removeUserName() {
-    return sessionStorage.remove(usernameKey);
-}
+    return cookie.remove(usernameKey, { path: '/' });
+};

@@ -7,7 +7,7 @@ import { loginData } from '../loginType';
 import { validate_password } from '../../../utils/validate';
 import { LoginApi, Register } from '../../../api/loginApi';
 import CryptoJS from "crypto-js";
-import { setToKen } from '../../../utils/tokenType';
+import { setToKen, setUserName } from '../../../utils/tokenType';
 
 const LoginForm = () => {
 
@@ -43,11 +43,13 @@ const LoginForm = () => {
             username: values.username,
             password: CryptoJS.MD5(values.password).toString(),
             code: values.code
-        }
+        };
         console.log('Received values of form: ', requestData);
         if (formType === 'login') {
-            LoginApi<{ token: string }>(values).then(res => {
-                setTimeout(() => { setToKen(res.token); navigate('/admin'); }, 1000);
+            LoginApi<{ token: string, username: string }>(values).then(res => {
+                setToKen(res.token);
+                setUserName(res.username);
+                setTimeout(() => { navigate('/admin'); }, 1000);
                 console.log(res, 'res');
             }).catch(err => {
                 console.log(err, 'err');
@@ -60,7 +62,7 @@ const LoginForm = () => {
                 console.log(err, 'err');
             });
 
-        }
+        };
 
     };
 

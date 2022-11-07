@@ -1,4 +1,5 @@
 import axios, { AxiosRequestConfig } from 'axios';
+import { getToKen, getUserName } from './tokenType';
 import { message } from 'antd';
 
 // //基础URL，axios将会自动拼接在url前
@@ -50,10 +51,12 @@ service.interceptors.request.use(
     (config: AxiosRequestConfig) => {
         //配置自定义请求头
         let customHeaders = {
-            language: 'zh-cn'
+            language: 'zh-cn',
+            Token: getToKen(),
+            Username: getUserName(),
         };
         config.headers = customHeaders;
-        return config
+        return config;
     },
     error => {
         console.log(error)

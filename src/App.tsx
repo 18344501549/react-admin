@@ -11,19 +11,21 @@ import PositionList from './components/position/PositionList';
 import PositionAdd from './components/position/PositionAdd';
 import Excusedabsence from './components/excusedabsence/Excusedabsence';
 import Workovertime from './components/workovertime/Workovertime';
+
 import './App.scss';
 
 function App() {
 
-
   return (
     <div className="App">
       <Routes>
-        <Route path="/" element={<Login />} />
+        <Route path="/" element={<Navigate to="/login" />} />
         <Route path="/login" element={<Login />} />
+        {/* Navigate 重定向子路由 如果嵌套需要两个路径相同路由，一个用于重定向 */}
+        <Route path='/admin' element={<Navigate to={'/admin/dashboard'} />} />
         <Route path="/admin" element={<Admin />} >
-          {/* index类似vue中的router-view的重定向，会主动触发二级路由 */}
-          <Route index path='/admin/dashboard' element={<Dashboard />} />
+
+          <Route path='/admin/dashboard' element={<Dashboard />} />
 
           <Route path='/admin/user'>
             <Route path='/admin/user/list' element={<UserList />} />
