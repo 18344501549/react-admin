@@ -103,21 +103,40 @@ const requestHandler = <T>(method: 'get' | 'post' | 'put' | 'delete', url: strin
         response.then(res => {
             //业务代码 可根据需求自行处理
             const data = res.data;
+            console.log(res, 'kjk');
+
             // resolve(data.data);
             if (data.resCode !== 0) {
 
-                //特定状态码 处理特定的需求
-                if (data.resCode === 401) {
-                    message.warn('您的账号已登出或超时，即将登出...');
-                    console.log('登录异常，执行登出...');
+
+
+                switch (data.resCode) {
+                    case 401:
+                        message.warn('您的账号已登出或超时，即将登出...');
+                        break;
+                    case 403:
+                        message.warn('您的账号Token已经过期,即将登出...');
+                        break;
+                    case 500:
+                        // error
+                        message.error({
+                            content: `请求错误:${data.message}`
+                        });
+                        break;
                 };
 
-                let e = JSON.stringify(data);
-                // error
-                message.warn({
-                    content: `请求错误:${data.message}`
-                });
-                console.log(`请求错误：${e}`)
+                // //特定状态码 处理特定的需求
+                // if (data.resCode === 401) {
+                //     message.warn('您的账号已登出或超时，即将登出...');
+                //     console.log('登录异常，执行登出...');
+                // };
+
+                // let e = JSON.stringify(data);
+                // // error
+                // message.warn({
+                //     content: `请求错误:${data.message}`
+                // });
+                // console.log(`请求错误：${e}`)
                 //数据请求错误 使用reject将错误返回
                 reject(data);
             } else {
