@@ -12,6 +12,7 @@ const items: MenuItem[] = [
         key: "/admin/dashboard",
         label: menuItem('/admin/dashboard', '仪表盘'),
         icon: '',
+        // affix: true
     },
     {
         key: "/admin/user",
