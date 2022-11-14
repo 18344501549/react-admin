@@ -17,7 +17,7 @@ const DepartmentAdd = () => {
         if (!values.number || values.number < 0) {
             message.error('数量不能小于等于0');
             return false;
-        }
+        };
         if (!values.content) {
             message.error('描述不能为空');
             return false;

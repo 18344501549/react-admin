@@ -103,7 +103,6 @@ const requestHandler = <T>(method: 'get' | 'post' | 'put' | 'delete', url: strin
         response.then(res => {
             //业务代码 可根据需求自行处理
             const data = res.data;
-            console.log(res, 'kjk');
 
             // resolve(data.data);
             if (data.resCode !== 0) {
