@@ -1,33 +1,76 @@
 import { MenuFoldOutlined, MenuUnfoldOutlined, } from '@ant-design/icons';
 import { Outlet, useLocation } from "react-router";
-import { Navigate } from "react-router-dom";
+import { Link, Navigate } from "react-router-dom";
 import { Layout, Menu, Breadcrumb } from 'antd';
-import React, { useEffect, useState } from 'react';
+import React, { Fragment, useCallback, useEffect, useState } from 'react';
 import items from '../../routers/index';
+import { useAppDispatch, useAppSelector } from '../../app/hooks';
 import TagsView from './TagsView/TagsView';
 import { getToKen } from '../../utils/tokenType';
+import { addTagsView, selectTagsViewRoutes } from '../../app/tagsViewSlice/tagsViewSlice';
+import { selectBreadcrumb } from '../../app/breadcrumbSlice/breadcrumbSlice';
+
 import './admin.scss';
 const Admin = () => {
     const { Header, Sider, Content } = Layout;
     const [collapsed, setCollapsed] = useState(false);
+    // 初始化redux的调用方法
+    const dispatch = useAppDispatch();
+
     const { pathname } = useLocation();
+
+    const tagsViewListRoutes = useAppSelector(selectTagsViewRoutes);
+
+
+    const initTagsView = useCallback(() => {
+        tagsViewListRoutes.forEach((item) => {
+            if (item.path === pathname) {
+                dispatch(addTagsView({ path: item.path, name: item.name }));
+            };
+        })
+    }, [tagsViewListRoutes, pathname, dispatch]);
+
+    useEffect(() => { initTagsView() }, [initTagsView]);
+
     const [openPath, setOpenPath] = useState<string>('');
+
     const [selKey, setSelKey] = useState<string>('');
     const pathnameArr = pathname.split('/');
     const menuKey = pathnameArr.splice(0, pathnameArr.length - 1).join('/');
-    const [tagsName, setTagsName] = useState<any[]>([{ name: '仪表盘', path: '/admin/dashboard', affix: true }]);
+
+    const pathSnippets = pathname.split('/').filter(i => i);
+
+    const breadcrumbLists = useAppSelector(selectBreadcrumb);
+    /** breadcrumb列表 */
+    const extraBreadcrumbItems = pathSnippets.map((_, index) => {
+        const url = `/${pathSnippets.slice(0, index + 1).join('/')}`;
+        if (pathname === '/admin/dashboard') {
+            return <Fragment key={index}></Fragment>
+        };
+        return (
+            <Breadcrumb.Item key={index}>
+                {breadcrumbLists[url]}
+            </Breadcrumb.Item>
+        );
+    });
 
 
-    // const 
+    const breadcrumbItems = [
+        <Breadcrumb.Item key="/">
+            {pathname !== '/admin/dashboard' && pathSnippets.length >= 2 ? <Link className={'breadcrumb-active'} to="/admin/dashboard">首页</Link> : (<span>首页</span>)}
+        </Breadcrumb.Item>,
+    ].concat(extraBreadcrumbItems);
+
+
+
     useEffect(() => {
-
         setOpenPath(menuKey);
         if (pathname === '/admin') {
             setSelKey('/admin/dashboard');
         } else {
             setSelKey(pathname);
         }
-    }, [menuKey, pathname, tagsName.length]);
+    }, [menuKey, pathname]);
 
 
     const handleMenu = (openKeys: string[]) => {
@@ -35,9 +78,7 @@ const Admin = () => {
     };
 
     const handlesel = (domEvent: any,) => {
-        setTagsName([...tagsName, { name: domEvent.domEvent.target.innerHTML, path: domEvent.key }]);
-
-
+        dispatch(addTagsView({ path: domEvent.key, name: domEvent.domEvent.target.textContent }));
     };
 
     return (
@@ -56,14 +97,22 @@ const Admin = () => {
                     />
                 </Sider>
                 <Layout className="site-layout">
-                    <Header className="site-layout-background" style={{ padding: 0 }}>
+                    <Header className="site-layout-background" style={{ padding: 0, display: 'flex' }}>
                         {React.createElement(collapsed ? MenuUnfoldOutlined : MenuFoldOutlined, {
                             className: 'trigger',
                             onClick: () => setCollapsed(!collapsed),
                         })}
-
+                        {
+                            pathSnippets.length ?
+                                <Breadcrumb separator="/">
+                                    {breadcrumbItems}
+                                </Breadcrumb>
+                                :
+                                <></>
+                        }
                     </Header>
-                    <TagsView tagsName={tagsName} selKey={selKey} />
+
+                    <TagsView />
                     <Content
                         className="site-layout-background"
                         style={{
