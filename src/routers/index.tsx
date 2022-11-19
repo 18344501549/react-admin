@@ -1,12 +1,15 @@
 import type { MenuProps } from 'antd';
-import { NavLink } from 'react-router-dom';
+import { NavLink, RouteObject } from 'react-router-dom';
+// import { Suspense, lazy } from 'react'
 type MenuItem = Required<MenuProps>['items'][number];
 
 function menuItem(path: string, item: string) {
     return (<NavLink to={path}>{item}</NavLink>)
 };
 
-// menuItem('/dashboard', '仪表盘')
+
+
+
 const items: MenuItem[] = [
     {
         key: "/admin/dashboard",
@@ -109,6 +112,74 @@ const items: MenuItem[] = [
     }
 
 ]
+
+
+// const router: RouteObject[] = [
+//     {
+//         path: '/',
+//         // name: '数据概览',
+//         // element: <Home />
+//     },
+//     {
+//         path: '/login',
+//         // name: '内容管理',
+//         // element:<Article />
+//     },
+//     {
+//         path: '/admin',
+//         // name: '首页',
+//         // element:<Publish />
+//         children: [
+//             // path: '/admin',
+//         ]
+//     },
+
+//     {
+//         path: '/customerlist',
+//         // name: '客户列表',
+//         // element:<CustomerList />
+//     },
+//     {
+//         path: '/createcustomer',
+//         // name: '新建客户',
+//         // element:<Createcustomer />
+//     },
+//     {
+//         path: '/scribe',
+//         // name: '预约列表',
+//         // element:<Scribe />
+//     },
+//     {
+//         path: '/orderlist',
+//         // name: '订单列表',
+//         // element:<OrderList />
+//     },
+//     {
+//         path: '/createorder',
+//         // name: '新建订单',
+//         // element:<Createorder />
+//     },
+//     {
+//         path: '/productlist',
+//         // name: '商品列表',
+//         // element:<ProductList />
+//     },
+//     {
+//         path: '/productcreate',
+//         // name: '新建商品',
+//         // element:<Createproduct />
+//     },
+//     {
+//         path: '/account',
+//         // name: '账号管理',
+//         // element:<AccountList />
+//     },
+//     {
+//         path: "*",
+//         // name: "404,未找到页面",
+//         // element:<Error404 />
+//     }
+// ]
 
 
 export default items;

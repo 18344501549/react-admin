@@ -1,7 +1,6 @@
  .trigger {
      padding: 0 24px;
      font-size: 24px;
-     line-height: 64px;
      cursor: pointer;
      transition: color 0.3s;
  }
@@ -26,4 +25,16 @@
  .ant-layouts {
      width: 100vw;
      height: 100vh;
+ }
+
+ .ant-layout-header {
+     align-items: center;
+ }
+
+ .ant-breadcrumb li:last-child {
+     color: rgba(0, 0, 0, 0.45) !important;
+ }
+
+ .breadcrumb-active {
+     color: rgba(0, 0, 0, 0.8) !important;
  }

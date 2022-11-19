@@ -19,9 +19,18 @@ const DepartmentList = () => {
 
     const [selectAll, setSelectAll] = useState<string[]>([]);
 
+    // 初始化
+    const loadData = useCallback(async (name?: string) => {
+        await DepartmentListApi<{ data: any, total: number }>({ name: name, pageNumber: pageNumber, pageSize: pageSize, }).then(res => {
+            const data = [...res.data];
+            console.log(data, 'rrrs');
+            setDepartmentList(data);
+        });
+    }, [pageNumber, pageSize]);
+
     useEffect(() => {
         loadData();
-    }, []);
+    }, [loadData]);
 
     const columns = [
         {
@@ -72,14 +81,7 @@ const DepartmentList = () => {
         console.log(row.id);
         setID(row.id);
     };
-    // 初始化
-    const loadData = async (name?: string) => {
-        await DepartmentListApi<{ data: any, total: number }>({ name: name, pageNumber: pageNumber, pageSize: pageSize, }).then(res => {
-            const data = [...res.data];
-            console.log(data, 'rrrs');
-            setDepartmentList(data);
-        });
-    };
+
     // 禁启用
     const Status = (checked: boolean, record: any) => {
         console.log(checked, 'checked');
