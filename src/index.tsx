@@ -6,6 +6,11 @@ import { BrowserRouter } from 'react-router-dom';
 import reportWebVitals from './reportWebVitals';
 import { store } from './app/store';
 import { Provider } from 'react-redux';
+import { ConfigProvider } from 'antd';
+import moment from 'moment';
+import enUS from 'antd/es/locale/en_US';
+import zhCN from 'antd/es/locale/zh_CN';
+import 'moment/locale/zh-cn';
 
 const root = ReactDOM.createRoot(
   document.getElementById('root') as HTMLElement
@@ -14,7 +19,9 @@ root.render(
   <React.StrictMode>
     <Provider store={store}>
       <BrowserRouter>
-        <App />
+        <ConfigProvider locale={zhCN}>
+          <App />
+        </ConfigProvider>
       </BrowserRouter>
     </Provider>
   </React.StrictMode>

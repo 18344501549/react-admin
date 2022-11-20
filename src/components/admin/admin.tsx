@@ -118,7 +118,7 @@ const Admin = () => {
                         style={{
                             margin: '24px 16px',
                             padding: 24,
-                            minHeight: 200,
+                            minHeight: '80%',
                         }}
                     >
                         {/* 渲染子路由 匹配到子路由时，用子路由的组件替换此处内容*/}

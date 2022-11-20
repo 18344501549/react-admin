@@ -1,15 +1,19 @@
 import React, { useEffect, useState, Fragment, useCallback, MouseEvent } from 'react';
 import { DepartmentListApi, DelectDepartmentApi, StatusDepartmentApi } from '../../api/departmentApi';
-import { Button, Form, Input, Table, Switch, Modal } from 'antd';
+import { Button, Form, Input, Table, Switch, Modal, message } from 'antd';
 import { departmentListDataType } from './departmentType'
 import './component/DepartmentList.scss'
-
+import { PlusOutlined } from '@ant-design/icons'
 
 const DepartmentList = () => {
+
+
     const [isModalOpen, setIsModalOpen] = useState<boolean>(false);
     // 渲染列表
     const [departmentList, setDepartmentList] = useState<departmentListDataType[]>([]);
     const [statusLoding, setStatusLoding] = useState<boolean>(false);
+
+    const [loadingTable, setLoadingTable] = useState<boolean>(false);
     // 当前页
     const [pageNumber, setPageNumber] = useState<number>(1);
     // 当前页大小
@@ -19,11 +23,14 @@ const DepartmentList = () => {
 
     const [selectAll, setSelectAll] = useState<string[]>([]);
 
+    const [total, setTotal] = useState<number>();
+
     // 初始化
     const loadData = useCallback(async (name?: string) => {
         await DepartmentListApi<{ data: any, total: number }>({ name: name, pageNumber: pageNumber, pageSize: pageSize, }).then(res => {
             const data = [...res.data];
-            console.log(data, 'rrrs');
+            console.log(res, 'rrrs');
+            setTotal(res.total);
             setDepartmentList(data);
         });
     }, [pageNumber, pageSize]);
@@ -72,7 +79,8 @@ const DepartmentList = () => {
     ];
 
     const departmentlistForn = (values: { name: string }) => {
-        console.log(values);
+        setLoadingTable(true);
+        setTimeout(() => { setLoadingTable(false); }, 800)
         loadData(values.name);
     };
     // 删除部门
@@ -98,8 +106,13 @@ const DepartmentList = () => {
     const delAll = () => {
         console.log(1);
         console.log(selectAll, 'selectAll');
+        if (!selectAll.length) {
+            message.warn('请勾选选项');
+            return false
+        }
         setIsModalOpen(true);
         if (isModalOpen) {
+
             handleOk();
         };
     };
@@ -113,7 +126,6 @@ const DepartmentList = () => {
                 setSelectAll([]);
                 return;
             };
-            // setSelectRowKes([...selectRowKes, ...selectedRowKeys]);
             setSelectAll([...selectedRowKeys, ...selectAll]);
         },
         onSelectAll: (record: any, selectedRows: any) => {
@@ -146,22 +158,43 @@ const DepartmentList = () => {
     };
 
 
+    const Tablepagination = {
+        hideOnSinglePage: true,
+        showQuickJumper: true,
+        showSizeChanger: true,
+        defaultCurrent: 1,
+        total: total,
+        pageSize: departmentList.length,
+        onChange: (page: number, pageSize: number) => {
+            setPageNumber(page);
+            console.log(page, 'page');
+            console.log(pageSize, 'pageSize');
+            setPageSize(pageSize);
+        }
+    }
+
+
     return (
         // {Fragment可以不用必须有一个真实的DOM根标签了}
-        <Fragment>
-            <Form layout="inline" onFinish={departmentlistForn}>
-                <Form.Item label="部门名称" name={'name'} className='departmentlist-name'>
-                    <Input autoComplete="off" placeholder="请输入部门名称" />
-                </Form.Item>
-                <Form.Item>
-                    <Button type="primary" htmlType="submit">搜索</Button>
-                </Form.Item>
-            </Form>
+        <Fragment >
+            <div style={{ display: 'flex' }}>
+                <Form layout="inline" onFinish={departmentlistForn}>
+                    <Form.Item label="部门名称" name={'name'} className='departmentlist-name'>
+                        <Input autoComplete="off" placeholder="请输入部门名称" />
+                    </Form.Item>
+                    <Form.Item>
+                        <Button loading={loadingTable} type="primary" htmlType="submit">搜索</Button>
+                    </Form.Item>
+                </Form>
+                <Button type="primary" icon={<PlusOutlined />} >
+                    新增
+                </Button>
+            </div>
             <div>
-                {departmentList.length ? <Table style={{ height: '60%' }} rowSelection={rowSelection} dataSource={departmentList} columns={columns} rowKey={record => record.id} bordered /> : <></>}
+                {departmentList.length ? <Table scroll={{ y: 500 }} pagination={Tablepagination} loading={departmentList.length ? false : true} style={{ height: '100%' }} rowSelection={rowSelection} dataSource={departmentList} columns={columns} rowKey={record => record.id} bordered /> : <></>}
                 {departmentList.length ? <Button onClick={delAll}>批量删除</Button> : <></>}
             </div>
-            <Modal title="是否删除该部门" open={isModalOpen} onOk={handleOk} onCancel={handleCancel}>
+            <Modal title="是否删除该部门" open={isModalOpen} onOk={handleOk} onCancel={handleCancel} centered>
                 <p>是否删除该信息,删除后无法恢复!!</p>
             </Modal>
         </Fragment>
