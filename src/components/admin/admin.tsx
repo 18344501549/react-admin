@@ -13,7 +13,7 @@ import { selectBreadcrumb } from '../../app/breadcrumbSlice/breadcrumbSlice';
 import './admin.scss';
 const Admin = () => {
     const { Header, Sider, Content } = Layout;
-    const [collapsed, setCollapsed] = useState(false);
+    const [collapsed, setCollapsed] = useState<boolean>(false);
     // 初始化redux的调用方法
     const dispatch = useAppDispatch();
 
@@ -21,7 +21,7 @@ const Admin = () => {
 
     const tagsViewListRoutes = useAppSelector(selectTagsViewRoutes);
 
-
+    // 解决刷新没有tagsView
     const initTagsView = useCallback(() => {
         tagsViewListRoutes.forEach((item) => {
             if (item.path === pathname) {
@@ -39,7 +39,7 @@ const Admin = () => {
     const menuKey = pathnameArr.splice(0, pathnameArr.length - 1).join('/');
 
     const pathSnippets = pathname.split('/').filter(i => i);
-
+    // 获取redux的Breadcrumb
     const breadcrumbLists = useAppSelector(selectBreadcrumb);
     /** breadcrumb列表 */
     const extraBreadcrumbItems = pathSnippets.map((_, index) => {
