@@ -2155,6 +2155,11 @@
   "resolved" "https://registry.npmmirror.com/@types/use-sync-external-store/-/use-sync-external-store-0.0.3.tgz"
   "version" "0.0.3"
 
+"@types/webpack-env@^1.18.0":
+  "integrity" "sha512-56/MAlX5WMsPVbOg7tAxnYvNYMMWr/QJiIp6BxVSW3JJXUVzzOn64qW8TzQyMSqSUFM2+PVI4aUHcHOzIz/1tg=="
+  "resolved" "https://registry.npmmirror.com/@types/webpack-env/-/webpack-env-1.18.0.tgz"
+  "version" "1.18.0"
+
 "@types/ws@^8.5.1":
   "integrity" "sha512-6YOoWjruKj1uLf3INHH7D3qTXwFfEsg1kf3c0uDdSBJwfa/llkwIjrAGV7j7mVgGNbzTQ3HiHKKDXl6bJPD97w=="
   "resolved" "https://registry.npmmirror.com/@types/ws/-/ws-8.5.3.tgz"

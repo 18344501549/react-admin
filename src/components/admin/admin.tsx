@@ -3,14 +3,14 @@ import { Outlet, useLocation } from "react-router";
 import { Link, Navigate } from "react-router-dom";
 import { Layout, Menu, Breadcrumb } from 'antd';
 import React, { Fragment, useCallback, useEffect, useState } from 'react';
-import items from '../../routers/index';
+import items from '../../routers/menu';
 import { useAppDispatch, useAppSelector } from '../../app/hooks';
 import TagsView from './TagsView/TagsView';
 import { getToKen } from '../../utils/tokenType';
 import { addTagsView, selectTagsViewRoutes } from '../../app/tagsViewSlice/tagsViewSlice';
 import { selectBreadcrumb } from '../../app/breadcrumbSlice/breadcrumbSlice';
 
-import './admin.scss';
+import './admin.css';
 const Admin = () => {
     const { Header, Sider, Content } = Layout;
     const [collapsed, setCollapsed] = useState<boolean>(false);
@@ -82,8 +82,8 @@ const Admin = () => {
     };
 
     return (
-        <div id='admin'>
-            <Layout className='ant-layouts'>
+        <Fragment>
+            <Layout style={{ overflowX: "hidden", height: "100%" }}>
                 <Sider trigger={null} collapsible collapsed={collapsed} width="254">
                     <div className="logo">偶买噶</div>
                     <Menu
@@ -96,8 +96,8 @@ const Admin = () => {
                         items={items}
                     />
                 </Sider>
-                <Layout className="site-layout">
-                    <Header className="site-layout-background" style={{ padding: 0, display: 'flex' }}>
+                <div className="site-layout" style={{ width: '100%', display: 'flex', flexDirection: "column", flex: "1", minWidth: "1000px", height: "100%" }}>
+                    <Header className="site-layout-background" style={{ padding: 0, display: 'flex', width: '100%' }}>
                         {React.createElement(collapsed ? MenuUnfoldOutlined : MenuFoldOutlined, {
                             className: 'trigger',
                             onClick: () => setCollapsed(!collapsed),
@@ -111,23 +111,21 @@ const Admin = () => {
                                 <></>
                         }
                     </Header>
-
                     <TagsView />
                     <Content
                         className="site-layout-background"
                         style={{
                             margin: '24px 16px',
                             padding: 24,
-                            minHeight: '80%',
                         }}
                     >
                         {/* 渲染子路由 匹配到子路由时，用子路由的组件替换此处内容*/}
                         {/* 类似Vue中的router-view */}
                         {getToKen() ? <Outlet /> : <Navigate to={'/login'} />}
                     </Content>
-                </Layout>
+                </div>
             </Layout>
-        </div>
+        </Fragment>
     );
 };
 

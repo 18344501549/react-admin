@@ -33,6 +33,7 @@ const DepartmentList = () => {
             setTotal(res.total);
             setDepartmentList(data);
         });
+        return false;
     }, [pageNumber, pageSize]);
 
     useEffect(() => {
@@ -176,7 +177,7 @@ const DepartmentList = () => {
 
     return (
         // {Fragment可以不用必须有一个真实的DOM根标签了}
-        <Fragment >
+        <Fragment>
             <div style={{ display: 'flex' }}>
                 <Form layout="inline" onFinish={departmentlistForn}>
                     <Form.Item label="部门名称" name={'name'} className='departmentlist-name'>

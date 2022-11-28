@@ -2,7 +2,7 @@ import React, { useState } from 'react';
 import { Button, Form, Input, InputNumber, message, Radio } from 'antd';
 import { departmentType } from '../department/departmentType';
 import { DepartmentAddApi } from '../../api/departmentApi';
-import './component/DepartmentAdd.scss';
+import style from './component/DepartmentAdd.module.scss'
 
 const DepartmentAdd = () => {
     const [form] = Form.useForm();
@@ -27,7 +27,7 @@ const DepartmentAdd = () => {
             setTimeout(() => {
                 form.resetFields();
                 setLoading(false);
-            }, 1500)
+            }, 1500);
 
             console.log(res, 'res');
         })
@@ -40,23 +40,23 @@ const DepartmentAdd = () => {
                 initialValues={{ status: true, number: 1 }}
                 onFinish={onFinish}
             >
-                <Form.Item label="部门名称" name={'name'} className='department-name'>
+                <Form.Item label="部门名称" name={'name'} className={style.departmentNname}>
                     <Input autoComplete="off" placeholder="请输入部门名称" />
                 </Form.Item>
                 <Form.Item label="人员数量" name={'number'} >
                     <InputNumber max={100} />
                 </Form.Item>
-                <Form.Item label="禁启用" name={'status'}>
-                    <Radio.Group className='ml-12'>
+                <Form.Item label="禁启用" name={'status'} style={{ marginLeft: 14 }}>
+                    <Radio.Group >
                         <Radio value={false}> 禁用 </Radio>
                         <Radio value={true}> 启用 </Radio>
                     </Radio.Group>
                 </Form.Item>
-                <Form.Item label="描述" name={'content'} className='department-description' >
-                    <TextArea rows={4} className='ml-24' />
+                <Form.Item label="描述" name={'content'} style={{ marginLeft: 26, width: 380 }}>
+                    <TextArea rows={4} />
                 </Form.Item>
                 <Form.Item className='department-btn'>
-                    <Button loading={loading} type="primary" htmlType="submit" className="department-form-btn">确定</Button>
+                    <Button loading={loading} type="primary" htmlType="submit">确定</Button>
                 </Form.Item>
             </Form>
         </div>

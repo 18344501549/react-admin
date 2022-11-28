@@ -22,10 +22,12 @@
      background: #fff;
  }
 
- .ant-layouts {
-     width: 100vw;
-     height: 100vh;
+ .appWrapper {
+     position: relative;
+     height: 100%;
+     width: 100%;
  }
+
 
  .ant-layout-header {
      align-items: center;
@@ -38,3 +40,7 @@
  .breadcrumb-active {
      color: rgba(0, 0, 0, 0.8) !important;
  }
+
+/* .comtent{
+    height: 100% ;
+} */
